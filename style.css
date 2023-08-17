@@ -1,65 +1,86 @@
-.file,
-body {
-  overflow: hidden;
-}
-
+/* load google font */
 @font-face {
   font-family: inherit;
 }
 
+/* reset defaults */
 * {
   box-sizing: border-box;
   margin: 0;
 }
 
+/* css variables */
 :root {
+  --desktop-color: ;
+  --desktop-text-color: ;
+
+  --title-bar-color: ;
   --title-bar-text-color: #eeeeee;
-  --title-bar-height: 15px;
-  --file-border-radius: 1px;
+  --title-bar-highlight-color:;
+  --title-bar-height: 32px;
+
+  --pane-content-background-color:;
+
+  --pane-default-width: 320px;
+  --pane-default-height: 360px;
+  --pane-border-radius: 8px;
 }
 
 body {
   font-family: inherit;
   background: var(--desktop-color);
+
+  /* if outside of the window, clip */
   height: 100vh;
+  overflow: clip;
 }
 
-p {
+h1 {
   color: var(--desktop-text-color);
-  padding: 10px;
+  padding: 32px;
   font-size: 1.5rem;
 }
 
-.file {
+.pane {
   position: absolute;
-  width: var(--file-default-width);
-  height: var(--file-default-height);
+  width: var(--pane-default-width);
+  height: var(--pane-default-height);
+
   display: grid;
   grid-template-rows: var(--title-bar-height) 1fr;
-  border-radius: var(--file-border-radius);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-  min-width: 200px;
-  min-height: 200px;
+
+  border-radius: var(--pane-border-radius);
+  
+
+  overflow: clip;
+
+  min-width: 160px;
+  min-height: 160px;
 }
 
-.file .content {
+.pane .title {
   cursor: move;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   background-color: var(--title-bar-color);
   color: var(--title-bar-text-color);
-  position: relative;
-  background-color: var(--file-content-background-color);
-  height: calc(100% - var(--title-bar-height));
 }
 
-.file p {
+.pane h2 {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.file .content img {
+.pane .content {
+  position: relative;
+  background-color: var(--pane-content-background-color);
+}
+
+/* make image fill the space */
+.pane .content img {
   position: absolute;
   top: 0;
   left: 0;
@@ -67,20 +88,27 @@ p {
   height: 100%;
   max-width: 100%;
   max-height: 100%;
+
   object-fit: contain;
+
   -webkit-user-drag: none;
   user-drag: none;
 }
 
-.file .corner {
+/* add a corner in bottom right */
+.pane .corner {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 24px;
-  height: 24px;
+  width: 10px;
+  height: 10px;
+
+  /* north west to south east */
   cursor: nwse-resize;
+
+  /* background-color: red; */
 }
 
-.file.is-dragging .title {
+.pane.is-dragging .title {
   background-color: var(--title-bar-highlight-color);
 }
